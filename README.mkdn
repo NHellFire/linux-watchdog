@@ -1,0 +1,34 @@
+Linux Watchdog Daemon
+====================
+
+This is a very simple watchdog daemon.
+
+### Features:
+
+* Creates the watchdog device (c 10 130) at /dev/watchdog
+* If /dev/watchdog already exists but isn't the correct device, it will be recreated
+* Writes the magic character 'V' to /dev/watchdog on SIGTERM to stop the watchdog timer (if supported by driver) when daemon is killed (by init on shutdown/reboot)
+
+### Building:
+
+    make
+
+Available build options:
+
+    NOWAYOUT=1 - Disable writing magic character on SIGTERM
+
+### Installing:  
+
+    sudo make install
+
+
+Available install options:
+
+    MONIT=1    - install config file for monit  
+    UPSTART=1  - install init script for upstart  
+    SYSVINIT=1 - install sysvinit script
+You can't specify both UPSTART and SYSVINIT, if your distro uses upstart, I recommend the upstart script as it will keep the daemon alive.
+
+Example:
+
+    sudo make install UPSTART=1 MONIT=1
